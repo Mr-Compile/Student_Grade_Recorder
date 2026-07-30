@@ -72,6 +72,62 @@ class DatabaseHelper {
     return result.map((map) => Student.fromMap(map)).toList();
   }
 
+  // Search and Filter Students
+  Future<List<Student>> searchStudents(String query) async {
+    final db = await instance.database;
+    final result = await db.query(
+      'students',
+      where: 'fullName LIKE ? OR section LIKE ? OR yearLevel LIKE ?',
+      whereArgs: ['%$query%', '%$query%', '%$query%'],
+      orderBy: 'fullName ASC',
+    );
+    return result.map((map) => Student.fromMap(map)).toList();
+  }
+
+  Future<List<Student>> filterStudentsBySection(String section) async {
+    final db = await instance.database;
+    final result = await db.query(
+      'students',
+      where: 'section = ?',
+      whereArgs: [section],
+      orderBy: 'fullName ASC',
+    );
+    return result.map((map) => Student.fromMap(map)).toList();
+  }
+
+  Future<List<Student>> filterStudentsByYearLevel(String yearLevel) async {
+    final db = await instance.database;
+    final result = await db.query(
+      'students',
+      where: 'yearLevel = ?',
+      whereArgs: [yearLevel],
+      orderBy: 'fullName ASC',
+    );
+    return result.map((map) => Student.fromMap(map)).toList();
+  }
+
+  Future<List<Student>> sortStudents(String sortBy, bool ascending) async {
+    final db = await instance.database;
+    final order = ascending ? 'ASC' : 'DESC';
+    final result = await db.query(
+      'students',
+      orderBy: '$sortBy $order',
+    );
+    return result.map((map) => Student.fromMap(map)).toList();
+  }
+
+  Future<List<String>> getAllSections() async {
+    final db = await instance.database;
+    final result = await db.rawQuery('SELECT DISTINCT section FROM students ORDER BY section ASC');
+    return result.map((map) => map['section'] as String).toList();
+  }
+
+  Future<List<String>> getAllYearLevels() async {
+    final db = await instance.database;
+    final result = await db.rawQuery('SELECT DISTINCT yearLevel FROM students ORDER BY yearLevel ASC');
+    return result.map((map) => map['yearLevel'] as String).toList();
+  }
+
   Future<Student?> readStudent(int id) async {
     final db = await instance.database;
     final maps = await db.query(
@@ -125,6 +181,28 @@ class DatabaseHelper {
   Future<List<Subject>> readAllSubjects() async {
     final db = await instance.database;
     final result = await db.query('subjects', orderBy: 'subjectName ASC');
+    return result.map((map) => Subject.fromMap(map)).toList();
+  }
+
+  // Search and Filter Subjects
+  Future<List<Subject>> searchSubjects(String query) async {
+    final db = await instance.database;
+    final result = await db.query(
+      'subjects',
+      where: 'subjectName LIKE ? OR subjectCode LIKE ?',
+      whereArgs: ['%$query%', '%$query%'],
+      orderBy: 'subjectName ASC',
+    );
+    return result.map((map) => Subject.fromMap(map)).toList();
+  }
+
+  Future<List<Subject>> sortSubjects(String sortBy, bool ascending) async {
+    final db = await instance.database;
+    final order = ascending ? 'ASC' : 'DESC';
+    final result = await db.query(
+      'subjects',
+      orderBy: '$sortBy $order',
+    );
     return result.map((map) => Subject.fromMap(map)).toList();
   }
 
@@ -195,6 +273,87 @@ class DatabaseHelper {
       INNER JOIN students ON grades.studentId = students.id
       INNER JOIN subjects ON grades.subjectId = subjects.id
       ORDER BY students.fullName ASC
+    ''');
+    return result;
+  }
+
+  // Search and Filter Grades
+  Future<List<Map<String, dynamic>>> searchGrades(String query) async {
+    final db = await instance.database;
+    final result = await db.rawQuery('''
+      SELECT 
+        grades.id,
+        grades.studentId,
+        grades.subjectId,
+        grades.gradeValue,
+        students.fullName as studentName,
+        subjects.subjectName,
+        subjects.subjectCode
+      FROM grades
+      INNER JOIN students ON grades.studentId = students.id
+      INNER JOIN subjects ON grades.subjectId = subjects.id
+      WHERE students.fullName LIKE ? OR subjects.subjectName LIKE ? OR subjects.subjectCode LIKE ?
+      ORDER BY students.fullName ASC
+    ''', ['%$query%', '%$query%', '%$query%']);
+    return result;
+  }
+
+  Future<List<Map<String, dynamic>>> filterGradesBySubject(int subjectId) async {
+    final db = await instance.database;
+    final result = await db.rawQuery('''
+      SELECT 
+        grades.id,
+        grades.studentId,
+        grades.subjectId,
+        grades.gradeValue,
+        students.fullName as studentName,
+        subjects.subjectName,
+        subjects.subjectCode
+      FROM grades
+      INNER JOIN students ON grades.studentId = students.id
+      INNER JOIN subjects ON grades.subjectId = subjects.id
+      WHERE grades.subjectId = ?
+      ORDER BY students.fullName ASC
+    ''', [subjectId]);
+    return result;
+  }
+
+  Future<List<Map<String, dynamic>>> filterGradesByStudent(int studentId) async {
+    final db = await instance.database;
+    final result = await db.rawQuery('''
+      SELECT 
+        grades.id,
+        grades.studentId,
+        grades.subjectId,
+        grades.gradeValue,
+        students.fullName as studentName,
+        subjects.subjectName,
+        subjects.subjectCode
+      FROM grades
+      INNER JOIN students ON grades.studentId = students.id
+      INNER JOIN subjects ON grades.subjectId = subjects.id
+      WHERE grades.studentId = ?
+      ORDER BY subjects.subjectName ASC
+    ''', [studentId]);
+    return result;
+  }
+
+  Future<List<Map<String, dynamic>>> sortGrades(String sortBy, bool ascending) async {
+    final db = await instance.database;
+    final order = ascending ? 'ASC' : 'DESC';
+    final result = await db.rawQuery('''
+      SELECT 
+        grades.id,
+        grades.studentId,
+        grades.subjectId,
+        grades.gradeValue,
+        students.fullName as studentName,
+        subjects.subjectName,
+        subjects.subjectCode
+      FROM grades
+      INNER JOIN students ON grades.studentId = students.id
+      INNER JOIN subjects ON grades.subjectId = subjects.id
+      ORDER BY $sortBy $order
     ''');
     return result;
   }
