@@ -1,7 +1,13 @@
 import 'dart:io';
 import 'package:image/image.dart';
+import 'package:logging/logging.dart';
 
 void main() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    print('${record.level.name}: ${record.message}');
+  });
+  final log = Logger('IconGenerator');
   // Create a 1024x1024 image
   final image = Image(width: 1024, height: 1024);
   
@@ -9,10 +15,10 @@ void main() {
   fill(image, color: ColorRgba8(79, 70, 229, 255));
   
   // Draw white document rectangle in center
-  final docX = 272;
-  final docY = 160;
-  final docW = 480;
-  final docH = 640;
+  const docX = 272;
+  const docY = 160;
+  const docW = 480;
+  const docH = 640;
   
   for (int y = docY; y < docY + docH; y++) {
     for (int x = docX; x < docX + docW; x++) {
@@ -21,10 +27,10 @@ void main() {
   }
   
   // Draw "A+" text area (purple rectangle)
-  final textX = 400;
-  final textY = 300;
-  final textW = 224;
-  final textH = 80;
+  const textX = 400;
+  const textY = 300;
+  const textW = 224;
+  const textH = 80;
   
   for (int y = textY; y < textY + textH; y++) {
     for (int x = textX; x < textX + textW; x++) {
@@ -33,9 +39,9 @@ void main() {
   }
   
   // Draw circle for student icon (left)
-  final circle1X = 400;
-  final circle1Y = 590;
-  final radius = 48;
+  const circle1X = 400;
+  const circle1Y = 590;
+  const radius = 48;
   
   for (int y = circle1Y - radius; y <= circle1Y + radius; y++) {
     for (int x = circle1X - radius; x <= circle1X + radius; x++) {
@@ -47,8 +53,8 @@ void main() {
   }
   
   // Draw green checkmark circle (right)
-  final circle2X = 624;
-  final circle2Y = 590;
+  const circle2X = 624;
+  const circle2Y = 590;
   
   for (int y = circle2Y - radius; y <= circle2Y + radius; y++) {
     for (int x = circle2X - radius; x <= circle2X + radius; x++) {
@@ -65,5 +71,5 @@ void main() {
   final png = encodePng(image);
   file.writeAsBytesSync(png);
   
-  print('Icon created successfully at assets/launcher_icon.png');
+  log.info('Icon created successfully at assets/launcher_icon.png');
 }
