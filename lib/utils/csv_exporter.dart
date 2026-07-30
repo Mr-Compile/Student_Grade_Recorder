@@ -3,7 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:io';
 import '../models/student.dart';
-import '../models/subject.dart';
+
 
 class CsvExporter {
   static Future<void> exportStudents(List<Student> students) async {

@@ -134,7 +134,7 @@ class _GradeFormScreenState extends State<GradeFormScreen> {
                         labelText: 'Select Student',
                         prefixIcon: Icon(LucideIcons.user),
                       ),
-                      value: _selectedStudent,
+                      initialValue: _selectedStudent,
                       items: _students.map((student) {
                         return DropdownMenuItem<Student>(
                           value: student,
@@ -157,7 +157,7 @@ class _GradeFormScreenState extends State<GradeFormScreen> {
                         labelText: 'Select Subject',
                         prefixIcon: Icon(LucideIcons.book),
                       ),
-                      value: _selectedSubject,
+                      initialValue: _selectedSubject,
                       items: _subjects.map((subject) {
                         return DropdownMenuItem<Subject>(
                           value: subject,

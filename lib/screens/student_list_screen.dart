@@ -232,7 +232,7 @@ class _StudentListScreenState extends State<StudentListScreen> {
             ),
           if (!_isSelectionMode)
             PopupMenuButton<String>(
-              icon: const Icon(LucideIcons.sortAsc),
+              icon: const Icon(LucideIcons.arrowUpDown),
               onSelected: (value) {
                 setState(() {
                   _sortBy = value;
@@ -293,7 +293,7 @@ class _StudentListScreenState extends State<StudentListScreen> {
                                       onChanged: (_) => _toggleSelection(student.id!),
                                     )
                                   : CircleAvatar(
-                                      backgroundColor: AppTheme.blueColor.withOpacity(0.1),
+                                      backgroundColor: AppTheme.blueColor.withValues(alpha: 0.1),
                                       child: Icon(LucideIcons.user, color: AppTheme.blueColor),
                                     ),
                               title: Text(
@@ -408,7 +408,7 @@ class _StudentListScreenState extends State<StudentListScreen> {
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
-                  value: _selectedSection,
+                  initialValue: _selectedSection,
                   items: [
                     const DropdownMenuItem(value: null, child: Text('All Sections')),
                     ..._sections.map((section) {
@@ -429,7 +429,7 @@ class _StudentListScreenState extends State<StudentListScreen> {
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
-                  value: _selectedYearLevel,
+                  initialValue: _selectedYearLevel,
                   items: [
                     const DropdownMenuItem(value: null, child: Text('All Year Levels')),
                     ..._yearLevels.map((yearLevel) {

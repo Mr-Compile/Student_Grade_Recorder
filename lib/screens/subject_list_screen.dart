@@ -110,7 +110,7 @@ class _SubjectListScreenState extends State<SubjectListScreen> {
             tooltip: 'Export CSV',
           ),
           PopupMenuButton<String>(
-            icon: const Icon(LucideIcons.sortAsc),
+            icon: const Icon(LucideIcons.arrowUpDown),
             onSelected: (value) {
               setState(() {
                 _sortBy = value;
@@ -164,7 +164,7 @@ class _SubjectListScreenState extends State<SubjectListScreen> {
                             child: ListTile(
                               contentPadding: const EdgeInsets.all(16),
                               leading: CircleAvatar(
-                                backgroundColor: AppTheme.purpleColor.withOpacity(0.1),
+                                backgroundColor: AppTheme.purpleColor.withValues(alpha: 0.1),
                                 child: Icon(LucideIcons.book, color: AppTheme.purpleColor),
                               ),
                               title: Text(

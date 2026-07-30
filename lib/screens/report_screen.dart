@@ -159,7 +159,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                           children: [
                                             CircleAvatar(
                                               backgroundColor:
-                                                  AppTheme.blueColor.withOpacity(0.1),
+                                                  AppTheme.blueColor.withValues(alpha: 0.1),
                                               child: Icon(
                                                 LucideIcons.user,
                                                 color: AppTheme.blueColor,
@@ -252,7 +252,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                             horizontal: 12,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: statusColor.withOpacity(0.1),
+                                            color: statusColor.withValues(alpha: 0.1),
                                             borderRadius: BorderRadius.circular(8),
                                           ),
                                           child: Center(

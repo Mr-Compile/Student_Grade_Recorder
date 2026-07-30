@@ -206,7 +206,7 @@ class _GradeListScreenState extends State<GradeListScreen> {
             ),
           if (!_isSelectionMode)
             PopupMenuButton<String>(
-              icon: const Icon(LucideIcons.sortAsc),
+              icon: const Icon(LucideIcons.arrowUpDown),
               onSelected: (value) {
                 setState(() {
                   _sortBy = value;
@@ -271,7 +271,7 @@ class _GradeListScreenState extends State<GradeListScreen> {
                                       onChanged: (_) => _toggleSelection(grade['id'] as int),
                                     )
                                   : CircleAvatar(
-                                      backgroundColor: statusColor.withOpacity(0.1),
+                                      backgroundColor: statusColor.withValues(alpha: 0.1),
                                       child: Icon(
                                         gradeValue >= 60 ? LucideIcons.checkCircle : LucideIcons.xCircle,
                                         color: statusColor,
@@ -300,7 +300,7 @@ class _GradeListScreenState extends State<GradeListScreen> {
                                           vertical: 2,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: statusColor.withOpacity(0.1),
+                                          color: statusColor.withValues(alpha: 0.1),
                                           borderRadius: BorderRadius.circular(12),
                                         ),
                                         child: Text(
