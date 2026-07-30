@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.student_grade_recorder"
-        minSdk 21
+        minSdkVersion flutter.minSdkVersion
         targetSdk 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
