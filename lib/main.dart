@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:student_grade_recorder/screens/dashboard_screen.dart';
+import 'package:student_grade_recorder/screens/main_navigation_screen.dart';
 import 'package:student_grade_recorder/theme/app_theme.dart';
 import 'package:student_grade_recorder/theme/theme_provider.dart';
 
@@ -34,7 +34,7 @@ class _StudentGradeRecorderAppState extends State<StudentGradeRecorderApp> {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: _themeProvider.themeMode,
-          home: DashboardScreen(themeProvider: _themeProvider),
+          home: MainNavigationScreen(themeProvider: _themeProvider),
         );
       },
     );

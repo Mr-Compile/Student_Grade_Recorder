@@ -10,10 +10,10 @@ class SubjectListScreen extends StatefulWidget {
   const SubjectListScreen({super.key});
 
   @override
-  State<SubjectListScreen> createState() => _SubjectListScreenState();
+  State<SubjectListScreen> createState() => SubjectListScreenState();
 }
 
-class _SubjectListScreenState extends State<SubjectListScreen> {
+class SubjectListScreenState extends State<SubjectListScreen> {
   List<Subject> _subjects = [];
   List<Subject> _filteredSubjects = [];
   bool _isLoading = true;
@@ -24,7 +24,7 @@ class _SubjectListScreenState extends State<SubjectListScreen> {
   @override
   void initState() {
     super.initState();
-    _loadSubjects();
+    loadSubjects();
     _searchController.addListener(_onSearchChanged);
   }
 
@@ -34,7 +34,7 @@ class _SubjectListScreenState extends State<SubjectListScreen> {
     super.dispose();
   }
 
-  Future<void> _loadSubjects() async {
+  Future<void> loadSubjects() async {
     setState(() => _isLoading = true);
     final subjects = await DatabaseHelper.instance.readAllSubjects();
     setState(() {
@@ -85,7 +85,7 @@ class _SubjectListScreenState extends State<SubjectListScreen> {
 
     if (confirm == true) {
       await DatabaseHelper.instance.deleteSubject(id);
-      _loadSubjects();
+      loadSubjects();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Subject deleted successfully')),
@@ -99,10 +99,6 @@ class _SubjectListScreenState extends State<SubjectListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Subjects'),
-        leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft),
-          onPressed: () => Navigator.pop(context),
-        ),
         actions: [
           IconButton(
             icon: const Icon(LucideIcons.download),
@@ -187,7 +183,7 @@ class _SubjectListScreenState extends State<SubjectListScreen> {
                                           ),
                                         ),
                                       );
-                                      _loadSubjects();
+                                      loadSubjects();
                                     },
                                   ),
                                   IconButton(
@@ -212,7 +208,7 @@ class _SubjectListScreenState extends State<SubjectListScreen> {
               builder: (context) => const SubjectFormScreen(),
             ),
           );
-          _loadSubjects();
+          loadSubjects();
         },
         icon: const Icon(LucideIcons.plus),
         label: const Text('Add Subject'),

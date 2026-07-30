@@ -10,10 +10,10 @@ class StudentListScreen extends StatefulWidget {
   const StudentListScreen({super.key});
 
   @override
-  State<StudentListScreen> createState() => _StudentListScreenState();
+  State<StudentListScreen> createState() => StudentListScreenState();
 }
 
-class _StudentListScreenState extends State<StudentListScreen> {
+class StudentListScreenState extends State<StudentListScreen> {
   List<Student> _students = [];
   List<Student> _filteredStudents = [];
   bool _isLoading = true;
@@ -30,8 +30,8 @@ class _StudentListScreenState extends State<StudentListScreen> {
   @override
   void initState() {
     super.initState();
-    _loadStudents();
-    _loadFilterOptions();
+    loadStudents();
+    loadFilterOptions();
     _searchController.addListener(_onSearchChanged);
   }
 
@@ -41,7 +41,7 @@ class _StudentListScreenState extends State<StudentListScreen> {
     super.dispose();
   }
 
-  Future<void> _loadStudents() async {
+  Future<void> loadStudents() async {
     setState(() => _isLoading = true);
     final students = await DatabaseHelper.instance.readAllStudents();
     setState(() {
@@ -51,7 +51,7 @@ class _StudentListScreenState extends State<StudentListScreen> {
     });
   }
 
-  Future<void> _loadFilterOptions() async {
+  Future<void> loadFilterOptions() async {
     final sections = await DatabaseHelper.instance.getAllSections();
     final yearLevels = await DatabaseHelper.instance.getAllYearLevels();
     setState(() {
@@ -110,8 +110,8 @@ class _StudentListScreenState extends State<StudentListScreen> {
     if (confirm == true) {
       await DatabaseHelper.instance.deleteStudent(id);
       await DatabaseHelper.instance.deleteStudentOnly(id);
-      _loadStudents();
-      _loadFilterOptions();
+      loadStudents();
+      loadFilterOptions();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Student deleted successfully')),
@@ -151,8 +151,8 @@ class _StudentListScreenState extends State<StudentListScreen> {
         _selectedStudentIds.clear();
         _isSelectionMode = false;
       });
-      _loadStudents();
-      _loadFilterOptions();
+      loadStudents();
+      loadFilterOptions();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Students deleted successfully')),
@@ -195,10 +195,6 @@ class _StudentListScreenState extends State<StudentListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Students'),
-        leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft),
-          onPressed: () => Navigator.pop(context),
-        ),
         actions: [
           if (_isSelectionMode)
             IconButton(
@@ -325,8 +321,8 @@ class _StudentListScreenState extends State<StudentListScreen> {
                                                 ),
                                               ),
                                             );
-                                            _loadStudents();
-                                            _loadFilterOptions();
+                                            loadStudents();
+                                            loadFilterOptions();
                                           },
                                         ),
                                         IconButton(
@@ -364,8 +360,8 @@ class _StudentListScreenState extends State<StudentListScreen> {
               builder: (context) => const StudentFormScreen(),
             ),
           );
-          _loadStudents();
-          _loadFilterOptions();
+          loadStudents();
+          loadFilterOptions();
         },
         icon: const Icon(LucideIcons.plus),
         label: const Text('Add Student'),

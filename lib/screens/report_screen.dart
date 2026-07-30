@@ -8,29 +8,29 @@ class ReportScreen extends StatefulWidget {
   const ReportScreen({super.key});
 
   @override
-  State<ReportScreen> createState() => _ReportScreenState();
+  State<ReportScreen> createState() => ReportScreenState();
 }
 
-class _ReportScreenState extends State<ReportScreen> {
+class ReportScreenState extends State<ReportScreen> {
   List<Student> _students = [];
   Map<int, List<Map<String, dynamic>>> _studentGrades = {};
   Map<int, double> _studentAverages = {};
   bool _isLoading = true;
   bool _isGenerating = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _loadStudents();
-  }
-
-  Future<void> _loadStudents() async {
+  Future<void> loadStudents() async {
     setState(() => _isLoading = true);
     final students = await DatabaseHelper.instance.readAllStudents();
     setState(() {
       _students = students;
       _isLoading = false;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadStudents();
   }
 
   Future<void> _generateReport() async {
@@ -58,10 +58,6 @@ class _ReportScreenState extends State<ReportScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reports'),
-        leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft),
-          onPressed: () => Navigator.pop(context),
-        ),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())

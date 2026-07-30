@@ -10,10 +10,10 @@ class GradeListScreen extends StatefulWidget {
   const GradeListScreen({super.key});
 
   @override
-  State<GradeListScreen> createState() => _GradeListScreenState();
+  State<GradeListScreen> createState() => GradeListScreenState();
 }
 
-class _GradeListScreenState extends State<GradeListScreen> {
+class GradeListScreenState extends State<GradeListScreen> {
   List<Map<String, dynamic>> _grades = [];
   List<Map<String, dynamic>> _filteredGrades = [];
   bool _isLoading = true;
@@ -26,7 +26,7 @@ class _GradeListScreenState extends State<GradeListScreen> {
   @override
   void initState() {
     super.initState();
-    _loadGrades();
+    loadGrades();
     _searchController.addListener(_onSearchChanged);
   }
 
@@ -36,7 +36,7 @@ class _GradeListScreenState extends State<GradeListScreen> {
     super.dispose();
   }
 
-  Future<void> _loadGrades() async {
+  Future<void> loadGrades() async {
     setState(() => _isLoading = true);
     final grades = await DatabaseHelper.instance.readGradesWithDetails();
     setState(() {
@@ -87,7 +87,7 @@ class _GradeListScreenState extends State<GradeListScreen> {
 
     if (confirm == true) {
       await DatabaseHelper.instance.deleteGrade(id);
-      _loadGrades();
+      loadGrades();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Grade deleted successfully')),
@@ -126,7 +126,7 @@ class _GradeListScreenState extends State<GradeListScreen> {
         _selectedGradeIds.clear();
         _isSelectionMode = false;
       });
-      _loadGrades();
+      loadGrades();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Grades deleted successfully')),
@@ -169,10 +169,6 @@ class _GradeListScreenState extends State<GradeListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Grades'),
-        leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft),
-          onPressed: () => Navigator.pop(context),
-        ),
         actions: [
           if (_isSelectionMode)
             IconButton(
@@ -333,7 +329,7 @@ class _GradeListScreenState extends State<GradeListScreen> {
                                                 ),
                                               ),
                                             );
-                                            _loadGrades();
+                                            loadGrades();
                                           },
                                         ),
                                         IconButton(
@@ -371,7 +367,7 @@ class _GradeListScreenState extends State<GradeListScreen> {
               builder: (context) => const GradeFormScreen(),
             ),
           );
-          _loadGrades();
+          loadGrades();
         },
         icon: const Icon(LucideIcons.plus),
         label: const Text('Add Grade'),

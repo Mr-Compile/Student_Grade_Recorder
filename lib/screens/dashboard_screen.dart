@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:student_grade_recorder/database/database_helper.dart';
-import 'package:student_grade_recorder/screens/student_list_screen.dart';
-import 'package:student_grade_recorder/screens/subject_list_screen.dart';
-import 'package:student_grade_recorder/screens/grade_list_screen.dart';
-import 'package:student_grade_recorder/screens/report_screen.dart';
 import 'package:student_grade_recorder/theme/app_theme.dart';
 import 'package:student_grade_recorder/theme/theme_provider.dart';
 
@@ -14,10 +10,10 @@ class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key, required this.themeProvider});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<DashboardScreen> createState() => DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class DashboardScreenState extends State<DashboardScreen> {
   int _totalStudents = 0;
   int _totalSubjects = 0;
   int _totalGrades = 0;
@@ -26,10 +22,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    _loadData();
+    loadData();
   }
 
-  Future<void> _loadData() async {
+  Future<void> loadData() async {
     final db = DatabaseHelper.instance;
     final students = await db.getStudentCount();
     final subjects = await db.getSubjectCount();
@@ -64,7 +60,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: _loadData,
+        onRefresh: loadData,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -97,62 +93,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 title: 'Overall Average',
                 value: _overallAverage.toStringAsFixed(2),
                 color: AppTheme.amberColor,
-              ),
-              const SizedBox(height: 32),
-              _buildNavigationButton(
-                icon: LucideIcons.users,
-                label: 'Students',
-                color: AppTheme.blueColor,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const StudentListScreen(),
-                    ),
-                  ).then((_) => _loadData());
-                },
-              ),
-              const SizedBox(height: 16),
-              _buildNavigationButton(
-                icon: LucideIcons.book,
-                label: 'Subjects',
-                color: AppTheme.purpleColor,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SubjectListScreen(),
-                    ),
-                  ).then((_) => _loadData());
-                },
-              ),
-              const SizedBox(height: 16),
-              _buildNavigationButton(
-                icon: LucideIcons.fileText,
-                label: 'Grades',
-                color: AppTheme.greenColor,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const GradeListScreen(),
-                    ),
-                  ).then((_) => _loadData());
-                },
-              ),
-              const SizedBox(height: 16),
-              _buildNavigationButton(
-                icon: LucideIcons.barChart2,
-                label: 'Reports',
-                color: AppTheme.purpleColor,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ReportScreen(),
-                    ),
-                  );
-                },
               ),
             ],
           ),
@@ -204,27 +144,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildNavigationButton({
-    required IconData icon,
-    required String label,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
-    return ElevatedButton.icon(
-      onPressed: onTap,
-      icon: Icon(icon, size: 24),
-      label: Text(
-        label,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-      ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 16),
       ),
     );
   }
