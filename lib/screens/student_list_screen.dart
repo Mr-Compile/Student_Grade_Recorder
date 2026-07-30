@@ -255,7 +255,7 @@ class StudentListScreenState extends State<StudentListScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(LucideIcons.users, size: 64, color: Colors.grey),
+                            const Icon(LucideIcons.users, size: 64, color: Colors.grey),
                             const SizedBox(height: 16),
                             Text(
                               'No students found',
@@ -290,7 +290,7 @@ class StudentListScreenState extends State<StudentListScreen> {
                                     )
                                   : CircleAvatar(
                                       backgroundColor: AppTheme.blueColor.withValues(alpha: 0.1),
-                                      child: Icon(LucideIcons.user, color: AppTheme.blueColor),
+                                      child: const Icon(LucideIcons.user, color: AppTheme.blueColor),
                                     ),
                               title: Text(
                                 student.fullName,

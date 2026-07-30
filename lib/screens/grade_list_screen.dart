@@ -229,7 +229,7 @@ class GradeListScreenState extends State<GradeListScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(LucideIcons.fileText, size: 64, color: Colors.grey),
+                            const Icon(LucideIcons.fileText, size: 64, color: Colors.grey),
                             const SizedBox(height: 16),
                             Text(
                               'No grades found',

@@ -66,7 +66,7 @@ class ReportScreenState extends State<ReportScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(LucideIcons.barChart2, size: 64, color: Colors.grey),
+                      const Icon(LucideIcons.barChart2, size: 64, color: Colors.grey),
                       const SizedBox(height: 16),
                       Text(
                         'No students to report',
@@ -117,7 +117,7 @@ class ReportScreenState extends State<ReportScreen> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     LucideIcons.fileText,
                                     size: 64,
                                     color: Colors.grey,
@@ -156,7 +156,7 @@ class ReportScreenState extends State<ReportScreen> {
                                             CircleAvatar(
                                               backgroundColor:
                                                   AppTheme.blueColor.withValues(alpha: 0.1),
-                                              child: Icon(
+                                              child: const Icon(
                                                 LucideIcons.user,
                                                 color: AppTheme.blueColor,
                                               ),
@@ -219,7 +219,7 @@ class ReportScreenState extends State<ReportScreen> {
                                                 ],
                                               ),
                                             );
-                                          }).toList(),
+                                          }),
                                         const Divider(height: 24),
                                         Row(
                                           mainAxisAlignment:

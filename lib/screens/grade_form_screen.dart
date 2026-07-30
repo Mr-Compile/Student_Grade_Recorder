@@ -177,7 +177,7 @@ class _GradeFormScreenState extends State<GradeFormScreen> {
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _gradeController,
-                      keyboardType: TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       decoration: const InputDecoration(
                         labelText: 'Grade (0-100)',
                         prefixIcon: Icon(LucideIcons.percent),

@@ -132,7 +132,7 @@ class SubjectListScreenState extends State<SubjectListScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(LucideIcons.book, size: 64, color: Colors.grey),
+                            const Icon(LucideIcons.book, size: 64, color: Colors.grey),
                             const SizedBox(height: 16),
                             Text(
                               'No subjects found',
@@ -161,7 +161,7 @@ class SubjectListScreenState extends State<SubjectListScreen> {
                               contentPadding: const EdgeInsets.all(16),
                               leading: CircleAvatar(
                                 backgroundColor: AppTheme.purpleColor.withValues(alpha: 0.1),
-                                child: Icon(LucideIcons.book, color: AppTheme.purpleColor),
+                                child: const Icon(LucideIcons.book, color: AppTheme.purpleColor),
                               ),
                               title: Text(
                                 subject.subjectName,
