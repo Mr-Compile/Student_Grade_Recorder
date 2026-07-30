@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:student_grade_recorder/database/database_helper.dart';
 import 'package:student_grade_recorder/screens/student_list_screen.dart';
 import 'package:student_grade_recorder/screens/subject_list_screen.dart';
